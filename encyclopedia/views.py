@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpRequest, HttpResponse, HttpResponseRedirect
 from markdown2 import markdown
-
+from random import choice
 
 from . import util
 
@@ -82,6 +82,5 @@ def edit_page(req: HttpRequest, entry):
     return render(req, 'encyclopedia/edit_page.html', {'name': entry, 'content': util.get_entry(entry)})
 
 
-
-
-    return HttpResponse(entry)
+def random(req: HttpRequest):
+    return HttpResponseRedirect(f'/wiki/{choice(util.list_entries())}')
