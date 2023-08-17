@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from django.http import HttpRequest
+from markdown2 import markdown
 from .util import get_entry
 
 
@@ -13,5 +14,5 @@ def index(request):
 
 
 def entry(req: HttpRequest, entry: str):
-    return render(req, 'encyclopedia/entry.html', {'entry_name': entry, 'entry_content': get_entry(entry)})
+    return render(req, 'encyclopedia/entry.html', {'entry_name': entry, 'entry_content': markdown(get_entry(entry))})
 
