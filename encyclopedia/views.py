@@ -24,6 +24,7 @@ def entry(req: HttpRequest, entry: str):
 def search(req: HttpRequest):
     if req.method == 'GET':
         q = req.GET['q']
-        if not q:
+        if not q or len(q) > 75:
             return HttpResponseRedirect('/')
+        
         return HttpResponse(req.GET['q'])
