@@ -1,8 +1,6 @@
 from django.shortcuts import render
 from django.http import HttpRequest, HttpResponse, HttpResponseRedirect
 from markdown2 import markdown
-from .util import get_entry
-
 
 
 from . import util
@@ -15,10 +13,10 @@ def index(request):
 
 
 def entry(req: HttpRequest, entry: str):
-    content = get_entry(entry)
+    content = util.get_entry(entry)
     if not content:
         return render(req, 'encyclopedia/error.html', {'error_message': '404 entry not found'})
-    return render(req, 'encyclopedia/entry.html', {'entry_name': entry, 'entry_content': markdown(get_entry(entry))})
+    return render(req, 'encyclopedia/entry.html', {'entry_name': entry, 'entry_content': markdown(util.get_entry(entry))})
 
 
 def search(req: HttpRequest):
@@ -26,4 +24,10 @@ def search(req: HttpRequest):
         q = req.GET['q']
         if not q or len(q) > 75:
             return render(req, 'encyclopedia/error', {'error_message': 'Query must be atleast 75 characters long.'})
+        
+        entries = util.list_entries()
+        for entry in entries:
+            if q == entry:
+                return HttpResponseRedirect(f'/wiki/{q}', {'entry_name': q, 'entry_content': util.get_entry(q)})
+
         return HttpResponse(req.GET['q'])
