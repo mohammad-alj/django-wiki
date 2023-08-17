@@ -47,4 +47,4 @@ def search(req: HttpRequest):
 
 
 def new_page(req: HttpRequest):
-    return HttpResponse('TODO')
+    return render(req, 'encyclopedia/new_page.html')
