@@ -61,3 +61,7 @@ def new_page(req: HttpRequest):
         util.save_entry(name, content)
         return HttpResponseRedirect('/')
     return render(req, 'encyclopedia/new_page.html', {'name': '', 'content': '', 'name_error': '', 'content_error': ''})
+
+
+def edit_page(req: HttpRequest, entry):
+    return HttpResponse(entry)
