@@ -43,3 +43,8 @@ def search(req: HttpRequest):
         else:
             # nothing found...
             return render(req, 'encyclopedia/error.html', {'code': 404, 'message': 'entry not found.'})
+
+
+
+def new_page(req: HttpRequest):
+    return HttpResponse('TODO')
