@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from django.http import HttpRequest, HttpResponse
+from django.http import HttpRequest, HttpResponse, HttpResponseRedirect
 from markdown2 import markdown
 from .util import get_entry
 
@@ -23,4 +23,7 @@ def entry(req: HttpRequest, entry: str):
 
 def search(req: HttpRequest):
     if req.method == 'GET':
+        q = req.GET['q']
+        if not q:
+            return HttpResponseRedirect('/')
         return HttpResponse(req.GET['q'])
