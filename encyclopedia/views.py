@@ -46,16 +46,18 @@ def search(req: HttpRequest):
 
 def new_page(req: HttpRequest):
     if req.method == 'POST':
-        name = req.GET['name']
-        content = req.GET['content']
+        name = req.POST['name']
+        content = req.POST['content']
         
         # check name
         if not name or len(name) > 75:
             return render(req, 'encyclopedia/error.html', {'code': 403, 'message': 'Name is required and should be less than 75 or greater.'})
 
         # check content
-        if not content or len(content) < 50:
-            return render(req, 'encyclopedia/error.html', {'code': 403, 'message': 'Content must be at least 50 characters.'})
+        if not content or len(content) < 30:
+            return render(req, 'encyclopedia/error.html', {'code': 403, 'message': 'Content must be at least 30 characters.'})
         
-
+        # all good
+        util.save_entry(name, content)
+        return HttpResponseRedirect('/')
     return render(req, 'encyclopedia/new_page.html', {'name': '', 'content': '', 'name_error': '', 'content_error': ''})

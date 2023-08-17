@@ -10,12 +10,12 @@ New page
     {% csrf_token %}
     <div class="mb-3">  
         <label for="name" class="form-label">Choose a name for the page</label>
-        <input type="text" autocomplete="off" id="name" name="name" placeholder="Page name" autofocus required minlength="75" class="form-control" value="{{ name }}">
+        <input type="text" autocomplete="off" id="name" name="name" placeholder="Page name" autofocus required maxlength="75" class="form-control" value="{{ name }}">
         <p class="text-danger">{{ name_error }}</p>
     </div>
     <div class="mb-3">
         <label for="content" class="form-label">Add markdown content</label>
-        <textarea name="content" id="content" cols="30" rows="10" required class="form-control" minlength="50">{{ content }}</textarea>
+        <textarea name="content" id="content" cols="30" rows="10" required class="form-control" minlength="30">{{ content }}</textarea>
         <p class="text-danger">{{ content_error }}</p>
     </div>
     <input type="submit" value="Create page" class="btn btn-primary">
