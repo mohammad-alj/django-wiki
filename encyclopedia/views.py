@@ -60,8 +60,28 @@ def new_page(req: HttpRequest):
         # all good
         util.save_entry(name, content)
         return HttpResponseRedirect('/')
-    return render(req, 'encyclopedia/new_page.html', {'name': '', 'content': '', 'name_error': '', 'content_error': ''})
+    return render(req, 'encyclopedia/new_page.html', {'name': '', 'content': ''})
 
 
 def edit_page(req: HttpRequest, entry):
+    entries = util.list_entries()
+    if entry not in entries:
+        return render(req, 'encyclopedia/error.html', {'code': 404, 'message': 'Entry does\'t exit.'})
+    
+    if req.method == 'POST':
+        content = req.POST['content']
+
+        # check content
+        if not content or len(content) < 30:
+            return render(req, 'encyclopedia/error.html', {'code': 403, 'message': 'Content must be at least 30 characters.'})
+        
+        # all good
+        util.save_entry(entry, content)
+        return HttpResponseRedirect('/')
+    
+    return render(req, 'encyclopedia/edit_page.html', {'name': entry, 'content': util.get_entry(entry)})
+
+
+
+
     return HttpResponse(entry)
