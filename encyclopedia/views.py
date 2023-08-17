@@ -27,7 +27,7 @@ def search(req: HttpRequest):
         
         entries = util.list_entries()
         for entry in entries:
-            if q == entry:
-                return HttpResponseRedirect(f'/wiki/{q}', {'entry_name': q, 'entry_content': util.get_entry(q)})
+            if q.lower() == entry.lower():
+                return HttpResponseRedirect(f'/wiki/{entry}', {'entry_name': entry, 'entry_content': util.get_entry(entry)})
 
         return HttpResponse(req.GET['q'])
