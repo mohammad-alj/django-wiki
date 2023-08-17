@@ -22,4 +22,8 @@ def entry(req: HttpRequest, entry: str):
 
 
 def search(req: HttpRequest):
-    return HttpResponse(req.GET['q'])
+    if req.method == 'GET':
+        q = req.GET['q']
+        if not q or len(q) > 75:
+            return render(req, 'encyclopedia/error', {'error_message': 'Query must be atleast 75 characters long.'})
+        return HttpResponse(req.GET['q'])
