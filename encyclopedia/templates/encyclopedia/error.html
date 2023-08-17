@@ -1,0 +1,9 @@
+{% extends "encyclopedia/layout.html" %}
+
+{% block title %}
+    {{ entry_name }} not found
+{% endblock %}
+
+{% block body %}
+    <p class="text-danger">{{ error_message }}</p>
+{% endblock %}
