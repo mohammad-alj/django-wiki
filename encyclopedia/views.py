@@ -21,10 +21,5 @@ def entry(req: HttpRequest, entry: str):
     return render(req, 'encyclopedia/entry.html', {'entry_name': entry, 'entry_content': markdown(get_entry(entry))})
 
 
-def search(req: HttpRequest):
-    if req.method == 'GET':
-        q = req.GET['q']
-        if not q or len(q) > 75:
-            return HttpResponseRedirect('/')
-        
-        return HttpResponse(req.GET['q'])
+def search_entry(req: HttpRequest):
+    return HttpResponse(req.GET['q'])
