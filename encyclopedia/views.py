@@ -23,11 +23,23 @@ def search(req: HttpRequest):
     if req.method == 'GET':
         q = req.GET['q']
         if not q or len(q) > 75:
-            return render(req, 'encyclopedia/error', {'error_message': 'Query must be atleast 75 characters long.'})
+            return render(req, 'encyclopedia/error.html', {'error_message': '403: Query must be atleast 75 characters long.'})
         
         entries = util.list_entries()
+        simular_entries = []
         for entry in entries:
             if q.lower() == entry.lower():
                 return HttpResponseRedirect(f'/wiki/{entry}', {'entry_name': entry, 'entry_content': util.get_entry(entry)})
+            if q.lower() in entry.lower():
+                simular_entries.append(entry)
+                
 
-        return HttpResponse(req.GET['q'])
+        # no entries match strictly...
+
+        # check if any entries are simular to query
+        print(simular_entries)
+        if len(simular_entries) > 0:
+            return render(req, 'encyclopedia/search_results.html', {'entries': simular_entries})
+        else:
+            # nothing found...
+            return render(req, 'encyclopedia/error.html', {'error_message': '404: Entry not found.'})
