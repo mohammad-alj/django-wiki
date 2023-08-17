@@ -14,5 +14,8 @@ def index(request):
 
 
 def entry(req: HttpRequest, entry: str):
+    content = get_entry(entry)
+    if not content:
+        return render(req, 'encyclopedia/error.html', {'error_message': '404 entry not found'})
     return render(req, 'encyclopedia/entry.html', {'entry_name': entry, 'entry_content': markdown(get_entry(entry))})
 
