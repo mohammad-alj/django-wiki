@@ -21,5 +21,5 @@ def entry(req: HttpRequest, entry: str):
     return render(req, 'encyclopedia/entry.html', {'entry_name': entry, 'entry_content': markdown(get_entry(entry))})
 
 
-def search_entry(req: HttpRequest):
+def search(req: HttpRequest):
     return HttpResponse(req.GET['q'])
